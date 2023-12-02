@@ -1,0 +1,29 @@
+{% extends 'layouts/base_admin.html' %}
+
+{% block title %}Borrar proyecto{% endblock %}
+
+{% block content %}
+
+    <div class="titulo">
+        <h1>Proyectos</h1>
+    </div>
+
+	<div class="espacio"></div>
+	
+	<div class="jumbotron">
+	  <form action="{% url 'agenda_proyecto_delete' proyecto.id %}" method="POST" name="form_proyectos">
+	  	{% csrf_token %}
+        <fieldset>
+            <div class="text-center">
+                <h1>Eliminacíon</h1>
+                <p class="lead">¿Estás seguro que deseas eliminar el proyecto {{ proyecto.titulo }} ?</p>
+                <p class="lead">
+                    <button type="submit" name="borrar_proyecto" class="btn btn-danger boton-largo"><i class="fa fa-times espacio-icono" aria-hidden="true"></i>Borrar</button>
+                    <a href="{% url 'agenda_proyecto_list' %}" class="btn btn-primary boton-largo" role="button"><i class="fa fa-arrow-left espacio-icono" aria-hidden="true"></i>Volver</a>
+                </p>
+            </div>
+        </fieldset>
+	  </form>
+	</div>
+
+{% endblock %}

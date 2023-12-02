@@ -1,0 +1,74 @@
+{% extends 'layouts/base_admin.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Actividades{% endblock %}
+
+{% block content %}
+
+	<div class="titulo">
+		<h1>Actividades</h1>
+	</div>
+	
+	<div class="espacio"></div>
+
+	<div id="cargando">
+		<div class="text-center">
+		  <div class="spinner-border" role="status">
+		    <span class="sr-only">Cargando...</span>
+		  </div>
+		</div>
+	</div>
+
+	<script>
+	$(document).ready(function() {
+		
+		$("#cargando").hide();
+
+		$.ajax({
+		    data: {},
+		    type: "GET",
+		    dataType: "json",
+		    url: "/administracion/actividades/cargarJson",
+		})
+		 .done(function( data, textStatus, jqXHR ) {
+		 	console.log(data);
+			$('#calendario').fullCalendar({
+		        loading: function( isLoading, view ) {
+		            if(isLoading) {
+		                $("#cargando").show();
+		            } else {
+		                $("#cargando").hide();
+		            }
+		        },
+				locale: 'es',
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay,listWeek'
+				},
+				defaultDate: data.fecha_actual,
+				navLinks: true,
+				editable: false,
+				eventLimit: true,
+				events: data.actividades
+			});
+		 })
+		 .fail(function( jqXHR, textStatus, errorThrown ) {
+		     if ( console && console.log ) {
+		         console.log( "La solicitud a fallado: " +  textStatus);
+		     }
+		});
+		
+	});
+	</script>
+
+	<div id="calendario"></div>
+
+	<div class="espacio"></div>
+
+	<div align="center">
+	    <a href="{% url 'agenda_actividad_view' %}" class="btn btn-primary boton-extra-largo" role="button"><i class="fa fa-plus espacio-icono" aria-hidden="true"></i>Agregar nueva actividad</a>
+	</div>
+	
+{% endblock %}

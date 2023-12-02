@@ -1,0 +1,67 @@
+{% extends 'layouts/base_admin.html' %}
+
+{% block title %}{{proyecto.titulo}}{% endblock %}
+
+{% block content %}
+
+	<div class="titulo">
+		<h1>Proyectos</h1>
+	</div>
+
+	<div class="espacio"></div>
+	
+	<div class="card card-primary contenedor">
+		<div class="card-header bg-primary">{{proyecto.titulo}}</div>
+		<div class="card-body">
+			<div class="card-block">
+				<div id="contenido">
+					<p class="contenido">{% autoescape off %}{{proyecto.contenido}}{% endautoescape %}</p>
+				</div>
+				<div class="mini-espacio"></div>
+				<div id="fecha_registro">
+					<b>Fecha de registro : </b>
+					{{proyecto.fecha_registro|date:'d/m/Y'}}
+				</div>
+				<div class="mini-espacio"></div>
+				<div id="fecha_inicio">
+					<b>Fecha de inicio : </b>
+					{% if proyecto.fecha_inicio %}
+						{{proyecto.fecha_inicio|date:'d/m/Y'}}
+					{% else %}
+						Ninguna
+					{% endif %}
+				</div>
+				<div class="mini-espacio"></div>
+				<div id="fecha_terminado">
+					<b>Fecha de terminado : </b>
+					{% if proyecto.fecha_terminado %}
+						{{proyecto.fecha_terminado|date:'d/m/Y'}}
+					{% else %}
+						Ninguna
+					{% endif %}
+				</div>
+				<div class="mini-espacio"></div>
+				<div id="estado">
+					<b>Estado : </b>
+				    {% if proyecto.esta_terminado %}
+				    	<span class="azul">Proyecto terminado</span>
+				    {% else %}
+				    	<span class="rojo">Proyecto en proceso</span>
+				    {% endif %}
+				</div>
+				<div class="mini-espacio"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="espacio"></div>
+
+	<div class="text-center">
+	    <p class="lead">
+	        <a href="{% url 'agenda_proyecto_edit' proyecto.id %}" class="btn btn-primary boton-largo" role="button"><i class="fa fa-pencil-square-o espacio-icono" aria-hidden="true"></i>Editar</a>
+	        <a href="{% url 'agenda_proyecto_delete' proyecto.id %}" class="btn btn-primary boton-largo" role="button"><i class="fa fa-times espacio-icono" aria-hidden="true"></i>Borrar</a>
+	        <a href="{% url 'agenda_proyecto_list' %}" class="btn btn-primary boton-largo" role="button"><i class="fa fa-arrow-left espacio-icono" aria-hidden="true"></i>Volver</a>
+	    </p>
+	</div>
+
+{% endblock %}

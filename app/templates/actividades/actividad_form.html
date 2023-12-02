@@ -1,0 +1,129 @@
+{% extends 'layouts/base_admin.html' %}
+
+{% block title %}
+	{% if actividad.titulo %}
+		{{actividad.titulo}}
+	{% else %}
+		Agregar actividad
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+
+	<div class="titulo">
+		<h1>Actividades</h1>
+	</div>
+
+	<div class="espacio"></div>
+	
+	<div class="card card-primary contenedor">
+		{% if nuevo %}
+			<div class="card-header bg-primary">Agregar actividad</div>
+		{% else %}
+			<div class="card-header bg-primary">Editando la actividad {{actividad.titulo}}</div>
+		{% endif %}
+		<div class="card-body">
+			<div class="card-block">
+			  {% if nuevo %}
+				<form action="{% url 'agenda_actividad_view' %}" method="POST" class="needs-validation" novalidate="novalidate" id="actividadForm">
+		      {% else %}
+		    	<form action="{% url 'agenda_actividad_edit' actividad.id %}" method="POST" class="needs-validation" novalidate="novalidate" id="actividadForm">
+		      {% endif %}
+			  {% csrf_token %}
+			  <fieldset>
+				<legend>Datos</legend>
+			    <div class="form-group" name="form-group-titulo">
+			      <label>{{form.titulo.label}}</label>
+				  {{form.titulo}}
+	              <div class="invalid-feedback">
+	                El título es requerido
+	               </div>				  
+			    </div>
+			    <div class="form-group" name="form-group-contenido">
+					<label>{{form.contenido.label}}</label>
+					{{form.contenido}}
+	              	<div class="invalid-feedback">
+	                  El contenido es requerido
+	                </div>
+			    </div>
+				<div class="mini-espacio"></div>
+				<div class="text-center">
+					<p class="lead">
+	    				<a class="btn btn-info herramienta" name="agregar_centrar" role="button" data-toggle="tooltip" title="Centrar"><i class="fa fa-align-center" aria-hidden="true"></i></a>	
+	    				<a class="btn btn-info herramienta" name="agregar_negrita" role="button" data-toggle="tooltip" title="Agregar negrita"><i class="fa fa-bold" aria-hidden="true"></i></a>								
+	    				<a class="btn btn-info herramienta" name="agregar_url" role="button" data-toggle="tooltip" title="Agregar URL"><i class="fa fa-link" aria-hidden="true"></i></a>			  	
+	    				<a class="btn btn-info herramienta" name="agregar_imagen" role="button" data-toggle="tooltip" title="Agregar imagen"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+	    				<a class="btn btn-info herramienta" name="agregar_video" role="button" data-toggle="tooltip" title="Agregar video"><i class="fa fa-video-camera" aria-hidden="true"></i></a>
+	    				<a class="btn btn-info herramienta" name="agregar_lista" role="button" data-toggle="tooltip" title="Agregar lista"><i class="fa fa-list-ul" aria-hidden="true"></i></a>
+	    				<a class="btn btn-info herramienta" name="agregar_estado" role="button" data-toggle="tooltip" title="Agregar estado"><i class="fa fa-th-list" aria-hidden="true"></i></a>
+	    				<a class="btn btn-info herramienta" name="mostrar_comandos" role="button" data-toggle="tooltip" title="Mostrar comandos"><i class="fa fa-info" aria-hidden="true"></i></a>
+					</p>
+				</div>
+		    	<div class="mini-espacio"></div>
+			    <div class="form-group" name="form-group-fecha">
+			      <div class="row">
+			    	  <div class="col-lg-2">
+				    	<label>{{form.fecha.label}}</label>
+				      </div>	
+				      <div class="col-lg-3">
+		                <div class="input-group date" id="dpFecha" data-target-input="nearest">
+		                    <input type="text" class="form-control datetimepicker-input" name="{{form.fecha.name}}" data-target="#dpFecha" value="{{form.fecha.value|date:'d/m/Y'}}" required="required" />
+		                    <div class="input-group-append" data-target="#dpFecha" data-toggle="datetimepicker">
+		                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+		                    </div>
+		                </div>			      	
+				      </div>
+			  	  </div>
+	              <div class="invalid-feedback">
+	                Seleccione la fecha
+	              </div>		  	  
+			    </div>
+			    <div class="form-group" name="form-group-hora">
+			      <div class="row">
+			    	  <div class="col-lg-2">
+				    	<label>{{form.hora.label}}</label>
+				      </div>	
+				      <div class="col-lg-3">
+		                <div class="input-group date" id="dpHora" data-target-input="nearest">
+		                    <input type="text" class="form-control datetimepicker-input" name="{{form.hora.name}}" data-target="#dpHora" value="{{form.hora.value}}"/>
+		                    <div class="input-group-append" data-target="#dpHora" data-toggle="datetimepicker">
+		                        <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+		                    </div>
+		                </div>			      	
+				      </div>
+			  	  </div>
+			    </div>
+			    <div class="form-group" name="form-group-terminado">
+			    	<div class="row">
+			    		<div class="col-lg-2">
+				    		<label>Estado</label>
+				    	</div>
+				    	<div class="col-lg-3">
+					    	<div class="custom-control custom-checkbox">
+					    		{% if form.esta_terminado.value %}
+					    			<input class="custom-control-input" id="esta_terminado" name="esta_terminado" checked="checked" type="checkbox">
+					    		{% else %}
+					    			<input class="custom-control-input" id="esta_terminado" name="esta_terminado" type="checkbox">
+					    		{% endif %}
+					    		<label class="custom-control-label" for="esta_terminado">Terminado</label>
+						    </div>
+						</div>
+					</div>
+			    </div>
+		        <div class="text-center">
+		            <p class="lead">
+						{% if nuevo %}
+							<button type="submit" class="btn btn-primary boton-largo" name="agregar_actividad"><i class="fa fa-plus espacio-icono" aria-hidden="true"></i>Agregar</button>
+						{% else %}
+							<button type="submit" class="btn btn-primary boton-largo" name="editar_actividad"><i class="fa fa-pencil-square-o espacio-icono" aria-hidden="true"></i>Editar</button>
+						{% endif %}
+		                <a href="{% url 'agenda_actividad_list' %}" class="btn btn-primary boton-largo" role="button"><i class="fa fa-arrow-left espacio-icono" aria-hidden="true"></i>Volver</a>
+		            </p>
+		        </div>
+			  </fieldset>
+			</form>   
+			</div>     
+		</div>
+	</div>
+
+{% endblock %}

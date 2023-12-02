@@ -1,0 +1,29 @@
+{% extends 'layouts/base_admin.html' %}
+
+{% block title %}Borrar nota{% endblock %}
+
+{% block content %}
+
+    <div class="titulo">
+        <h1>Notas</h1>
+    </div>
+
+    <div class="espacio"></div>
+	
+	<div class="jumbotron">
+	  <form action="{% url 'agenda_nota_delete' nota.id %}" method="POST" name="form_notas">
+	  	{% csrf_token %}
+        <fieldset>
+            <div class="text-center">
+                <h1>Eliminacíon</h1>
+                <p class="lead">¿Estás seguro que deseas eliminar la nota {{ nota.titulo }} ?</p>
+                <p class="lead">
+                    <button type="submit" name="borrar_nota" class="btn btn-danger boton-largo"><i class="fa fa-times espacio-icono" aria-hidden="true"></i>Borrar</button>
+                    <a href="{% url 'agenda_nota_list' %}" class="btn btn-primary boton-largo" role="button"><i class="fa fa-arrow-left espacio-icono" aria-hidden="true"></i>Volver</a>
+                </div>
+            </div>
+        </fieldset>
+	  </form>
+	</div>
+
+{% endblock %}

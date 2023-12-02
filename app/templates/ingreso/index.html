@@ -1,0 +1,39 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Ingreso{% endblock %}
+
+{% block content %}
+  <div class="card card-primary ingreso">
+    <div class="card-header bg-primary">Ingreso</div>
+      <div class="card-body">
+          <div class="card-block">
+            <form action="{% url 'agenda_ingreso' %}" method="POST" class="needs-validation" novalidate="novalidate" id="ingresoForm">
+              {% csrf_token %}
+              <fieldset>
+                <legend>Datos</legend>
+                <div class="form-group" name="form-group-usuario">
+                  <label>{{form.usuario.label}}</label>
+                  {{form.usuario}}
+                  <div class="invalid-feedback">
+                      El usuario es requerido
+                  </div>       
+                </div>
+                <div class="form-group" name="form-group-clave">
+                  <label>{{form.clave.label}}</label>
+                  {{form.clave}}
+                  <div class="invalid-feedback">
+                      La clave es requerida
+                  </div>                
+                </div>
+               <div class="text-center">
+                  <p class="lead">
+                    <button type="submit" name="ingresar" id="ingresar" class="btn btn-primary boton-largo">Ingresar</button>
+                  </p>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'layouts/base_admin.html' %}
+
+{% block title %}{{nota.titulo}}{% endblock %}
+
+{% block content %}
+
+	<div class="titulo">
+		<h1>Notas</h1>
+	</div>
+
+	<div class="espacio"></div>
+
+	<div class="card card-primary contenedor">
+		<div class="card-header bg-primary">Creada el {{ nota.fecha_registro|date:'d/m/Y' }}</div>
+		<div class="card-body">
+			<div>
+				<h1 class="text-center">{{nota.titulo}}</h1>
+			</div>
+			<div class="espacio"></div>
+			<div>
+			<p class="contenido">{% autoescape off %}{{ nota.contenido }}{% endautoescape %}</p>
+			</div>
+		</div>
+	</div>
+	<div class="espacio"></div>
+	<div class="text-center">
+	    <p class="lead">
+	        <a href="{% url 'agenda_nota_edit' nota.id %}" class="btn btn-primary boton-largo" role="button"><i class="fa fa-pencil-square-o espacio-icono" aria-hidden="true"></i>Editar</a>
+	        <a href="{% url 'agenda_nota_delete' nota.id %}" class="btn btn-primary boton-largo" role="button"><i class="fa fa-times espacio-icono" aria-hidden="true"></i>Borrar</a>
+	        <a href="{% url 'agenda_nota_list' %}" class="btn btn-primary boton-largo" role="button"><i class="fa fa-arrow-left espacio-icono" aria-hidden="true"></i>Volver</a>
+	    </div>
+	</div>
+
+{% endblock %}

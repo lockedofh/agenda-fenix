@@ -1,0 +1,39 @@
+{% extends 'layouts/base_admin.html' %}
+
+{% block title %}Exportar{% endblock %}
+
+{% block content %}
+
+  <div class="titulo">
+    <h1>Exportar</h1>
+  </div>
+
+  <div class="espacio"></div>
+
+  <div class="card card-primary contenedor">
+    <div class="card-header bg-primary">Exportar datos</div>
+      <div class="card-body">
+          <div class="card-block">
+            <form action="{% url 'agenda_exportar' %}" method="POST" class="needs-validation" novalidate="novalidate" id="exportarForm">
+              {% csrf_token %}
+              <fieldset>
+                <legend>Datos</legend>
+                <div class="form-group" name="form-group-directorio">
+                  <label>{{form.directorio.label}}</label>
+                  {{form.directorio}}
+                  <div class="invalid-feedback">
+                    El directorio es requerido
+                  </div>                  
+                </div>
+               <div class="text-center">
+                  <p class="lead">
+                    <button type="submit" name="exportar" id="exportar" class="btn btn-primary boton-largo">Exportar</button>
+                  </p>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+    </div>
+  </div>
+
+{% endblock %}

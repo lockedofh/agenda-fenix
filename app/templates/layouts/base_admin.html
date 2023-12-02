@@ -1,0 +1,129 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title> 
+    <link rel="icon" href="{% static 'images/agenda.png' %}">
+
+    <!-- Bootstrap -->
+
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+    
+    <link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet">
+    
+    <link href="{% static 'dist/sweetalert.css' %}" rel="stylesheet" />
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
+
+    <link href="{% static 'css/fullcalendar.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/fullcalendar.print.min.css' %}" rel="stylesheet" media="print"/>
+
+    {% if request.session.skin == 1 %}
+        <link id="theme" href="{% static 'css/style_sketchy.css' %}" rel="stylesheet" />
+    {% elif request.session.skin == 2 %}
+        <link id="theme" href="{% static 'css/style_cursive.css' %}" rel="stylesheet" />
+    {% else %}
+        <link id="theme" href="{% static 'css/style_sketchy.css' %}" rel="stylesheet" />
+    {% endif %}
+    
+    <script src="{% static 'js/moment.js' %}" charset="UTF-8"></script>
+    <script src="{% static 'js/jquery-3.3.1.js' %}" charset="UTF-8"></script>
+    <script src="{% static 'js/popper.js' %}" charset="UTF-8"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}" charset="UTF-8"></script>
+
+    <link href="{% static 'css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/tempusdominus-bootstrap-4.min.js' %}" charset="UTF-8"></script>
+
+    <script src="{% static 'js/fullcalendar.min.js' %}" charset="UTF-8"></script>
+    <script src="{% static 'js/locale-all.js' %}" charset="UTF-8"></script>
+
+    <script src="{% static 'js/jquery.dataTables.min.js' %}" charset="UTF-8"></script>
+    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}" charset="UTF-8"></script>
+
+    <!--
+    -->
+
+    <script src="{% static 'dist/sweetalert-dev.js' %}" charset="UTF-8"></script>
+    <script src="{% static 'js/highcharts.js' %}" charset="UTF-8"></script>
+    <script src="{% static 'js/exporting.js' %}" charset="UTF-8"></script>
+
+    <script src="{% static 'js/app-admin.js' %}" charset="UTF-8"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Agenda Fénix 1.2</a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a class="nav-link" href="{% url 'agenda_administracion' %}" name="inicio"><i class="fa fa-home espacio-icono" aria-hidden="true"></i></span>Inicio<span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="gestionar"><i class="fa fa-tasks espacio-icono" aria-hidden="true"></i>Gestionar <span class="caret"></span></a>
+                        <div class="dropdown-menu" aria-labelledby="gestionar">
+                            <a class="dropdown-item" href="{% url 'agenda_categoria_list' %}" name="categorias">Categorias</a>
+                            <a class="dropdown-item" href="{% url 'agenda_nota_list' %}" name="notas">Notas</a>
+                            <a class="dropdown-item" href="{% url 'agenda_actividad_list' %}" name="actividades">Actividades</a>
+                            <a class="dropdown-item" href="{% url 'agenda_proyecto_list' %}" name="proyectos">Proyectos</a>       
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="datos"><i class="fa fa-database espacio-icono" aria-hidden="true"></i>Datos <span class="caret"></span></a>
+                        <div class="dropdown-menu" aria-labelledby="datos">
+                            <a class="dropdown-item" href="{% url 'agenda_importar' %}" name="importar">Importar</a>
+                            <a class="dropdown-item" href="{% url 'agenda_exportar' %}" name="exportar">Exportar</a>     
+                        </div>
+                    </li>                    
+                    <li class="nav-item"><a class="nav-link" href="{% url 'agenda_estadisticas' %}" name="estadisticas"><i class="fa fa-bar-chart espacio-icono" aria-hidden="true"></i></span>Estadísticas</span></a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="skins"><i class="fa fa-cogs espacio-icono" aria-hidden="true"></i>Skins <span class="caret"></span></a>
+                        <div class="dropdown-menu" aria-labelledby="skins">
+                            <a class="dropdown-item" href="" name="sketchy">Sketchy</a>
+                            <a class="dropdown-item" href="" name="cursive">Cursive</a>
+                        </div>
+                    </li>                    
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="cuenta" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle espacio-icono" aria-hidden="true"></i>{{ usuario_logeado }} <span class="caret"></span></a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cuenta">
+                            <a class="dropdown-item" href="{% url 'agenda_cambiar_usuario' %}" name="cambiar_usuario">Cambiar Usuario</a>
+                            <a class="dropdown-item" href="{% url 'agenda_cambiar_clave' %}" name="cambiar_clave">Cambiar Clave</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'agenda_salir' %}">Salir</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>     
+        <section>
+          <div class="container-fluid" style="margin-top: 100px">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}   
+            {% block content %}
+            {% endblock %}
+          </div>
+        </section>    
+        <footer>
+            <div class="container text-center">
+                <p>Copyright &copy; Ismael Heredia 2020 &middot; All Rights Reserved &middot;</p>
+            </div>
+        </footer>
+    </body>
+</html>
